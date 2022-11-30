@@ -104,9 +104,18 @@ function App() {
 
   return (
     <div>
+      <div style={{backgroundColor: "yellow", padding: "5px", textAlign: "center"}}>
+        <h3>Warning</h3>
+        This is a hack day project! It is not a complete model of the UK economy, there are many factors not covered here (so far at least).
+        <br/>
+        Whilst the data has primarily been sourced from the ONS, it has been input <strong>manually</strong>, roughly for the 4 quarters prior to when this was made (Nov 2022).
+        <br/>
+        <strong>TLDR; nothing you see here is fully journalistically accurate!</strong>
+      </div>
       <div style={{
         display: 'flex',
         margin: "20px",
+        position: "relative"
       }}>
         <InteractiveMoneyTreeMap
           initialData={{
@@ -130,12 +139,12 @@ function App() {
           heading={"Outgoing"}
           setBorrowing={setBorrowing}
         />
-      </div>
-      <div style={{textAlign: "center", position: "absolute", top: 0, left: 0, right: 0}}>
-        <div><strong>INFLATION</strong></div>
-        <button onClick={mutateInflation("down")}>➖</button>
-        {inflation.toFixed(2)}%
-        <button onClick={mutateInflation("up")}>➕</button>
+        <div style={{textAlign: "center", position: "absolute", top: 0, left: 0, right: 0}}>
+          <div><strong>INFLATION</strong></div>
+          <button onClick={mutateInflation("down")}>➖</button>
+          {inflation.toFixed(2)}%
+          <button onClick={mutateInflation("up")}>➕</button>
+        </div>
       </div>
     </div>
   );
