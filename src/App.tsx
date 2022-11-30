@@ -146,6 +146,11 @@ function App() {
           <button onClick={mutateInflation("up")}>➕</button>
         </div>
       </div>
+      <div style={{fontSize: "90%", bottom: "5px", right: 0, position: "fixed" }}>
+        <span style={{backgroundColor: "lightgray", padding: "5px", borderTopLeftRadius: "5px"}}>
+          Source code: <a href="https://github.com/guardian/balancing-the-books">https://github.com/guardian/balancing-the-books</a>
+        </span>
+      </div>
     </div>
   );
 }
