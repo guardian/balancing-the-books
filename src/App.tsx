@@ -24,6 +24,10 @@ const incomingDataSeedWithBorrowing: Data = {
 
 function App() {
 
+  const isIFramed = useMemo(() => window.self !== window.top, []);
+
+  const isFullscreen = false; // TODO implement fullscreen support
+
   // EVERYTHING IS IN MILLIONS OF POUNDS (for d3 perf reasons)
   const [incomingTotal, setIncomingTotal] = useState(0);
   const [outgoingTotal, setOutgoingTotal] = useState(0);
@@ -104,14 +108,16 @@ function App() {
 
   return (
     <div>
-      <div style={{backgroundColor: "yellow", padding: "5px", textAlign: "center"}}>
-        <h3>Warning</h3>
-        This is a hack day project! It is not a complete model of the UK economy, there are many factors not covered here (so far at least).
-        <br/>
-        Whilst the data has primarily been sourced from the ONS, it has been input <strong>manually</strong>, roughly for the 4 quarters prior to when this was made (Nov 2022).
-        <br/>
-        <strong>TLDR; nothing you see here is fully journalistically accurate!</strong>
-      </div>
+      {(!isIFramed || isFullscreen) && (
+        <div style={{backgroundColor: "yellow", padding: "5px", textAlign: "center"}}>
+          <h3>Warning</h3>
+          This is a hack day project! It is not a complete model of the UK economy, there are many factors not covered here (so far at least).
+          <br/>
+          Whilst the data has primarily been sourced from the ONS, it has been input <strong>manually</strong>, roughly for the 4 quarters prior to when this was made (Nov 2022).
+          <br/>
+          <strong>TLDR; nothing you see here is fully journalistically accurate!</strong>
+        </div>
+      )}
       <div style={{
         display: 'flex',
         margin: "20px",
@@ -146,11 +152,13 @@ function App() {
           <button onClick={mutateInflation("up")}>➕</button>
         </div>
       </div>
-      <div style={{fontSize: "90%", bottom: "5px", right: 0, position: "fixed" }}>
-        <span style={{backgroundColor: "lightgray", padding: "5px", borderTopLeftRadius: "5px"}}>
-          Source code: <a href="https://github.com/guardian/balancing-the-books">https://github.com/guardian/balancing-the-books</a>
-        </span>
-      </div>
+      {(!isIFramed || isFullscreen) && (
+        <div style={{fontSize: "90%", bottom: "5px", right: 0, position: "fixed" }}>
+          <span style={{backgroundColor: "lightgray", padding: "5px", borderTopLeftRadius: "5px"}}>
+            Source code: <a href="https://github.com/guardian/balancing-the-books">https://github.com/guardian/balancing-the-books</a>
+          </span>
+        </div>
+      )}
     </div>
   );
 }
