@@ -2,6 +2,8 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Data, InteractiveMoneyTreeMap} from "./InteractiveMoneyTreeMap";
 import {initialIncoming} from "./initialIncoming";
 import {initialOutgoing} from "./initialOutgoing";
+import {EnterFullscreenOverlay} from "./EnterFullscreenOverlay";
+import {FullScreen, useFullScreenHandle} from "react-full-screen";
 
 const INITIAL_BORROWING = 135_000; // will be multiplied by a million elsewhere
 const incomingDataSeedWithBorrowing: Data = {
@@ -26,7 +28,11 @@ function App() {
 
   const isIFramed = useMemo(() => window.self !== window.top, []);
 
-  const isFullscreen = false; // TODO implement fullscreen support
+  const fullscreenHandle = useFullScreenHandle();
+
+  const isFullscreen = fullscreenHandle.active;
+
+  const canEnterFullscreen = isIFramed && !isFullscreen;
 
   // EVERYTHING IS IN MILLIONS OF POUNDS (for d3 perf reasons)
   const [incomingTotal, setIncomingTotal] = useState(0);
@@ -107,7 +113,10 @@ function App() {
   }), [borrowing, inflation]);
 
   return (
-    <div>
+    <FullScreen handle={fullscreenHandle}>
+      {canEnterFullscreen && (
+        <EnterFullscreenOverlay onClick={fullscreenHandle.enter}/>
+      )}
       {(!isIFramed || isFullscreen) && (
         <div style={{backgroundColor: "yellow", padding: "5px", textAlign: "center"}}>
           <h3>Warning</h3>
@@ -159,7 +168,15 @@ function App() {
           </span>
         </div>
       )}
-    </div>
+      {isFullscreen && (
+        <div style={{bottom: "5px", left: 0, position: "fixed", cursor: "pointer" }} onClick={fullscreenHandle.exit}>
+          <strong style={{backgroundColor: "lightgray", padding: "5px", borderTopRightRadius: "5px"}}>
+            EXIT FULLSCREEN
+          </strong>
+        </div>
+      )}
+      {/*TODO add a share button, centered probably*/}
+    </FullScreen>
   );
 }
 
