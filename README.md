@@ -18,6 +18,8 @@ The figures are roughly for 2022 (manually input into this tool's JSON model, cu
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+Take a look at [http://localhost:3000/iframed](http://localhost:3000/iframed) to see how it works in an iFrame (i.e. embedded into an article).
+
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
